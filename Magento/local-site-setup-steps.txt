@@ -1,0 +1,51 @@
+**Setup website in your local**
+1. Mysql dump of live database
+2. Download SQL in local
+3. Make zip of Magento folders and exclude SQL and zip files.
+4. Download zip file in local
+5. Import SQL in your local 
+6. Change URL in core_config_data table 
+7. Unzip magento folder file in your local 
+8. Change database, username and password in env.php
+9. Run all the commands 
+10. Run website in the browser.
+
+Export : mysqldump --no-tablespaces -u mysql_user -p databasename > filename.sql
+Import : mysql -u mysql_user -p databasename < filename.sql
+
+Make zip : zip -r filename.zip * -x *.sql/**\* *.zip/**\*
+
+
+wget https://vdcstore.com/public_html-28-feb-25.zip
+wget https://vdcstore.com/vdcstore-live-db-28-dec.sql
+
+
+
+-----------------------------create a vertual host--------------------------------------
+
+ref block : https://www.digitalocean.com/community/tutorials/how-to-set-up-apache-virtual-hosts-on-ubuntu-20-04
+
+sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/your_domain_1.conf
+sudo nano /etc/apache2/sites-available/vdcstore_live_163.conf
+
+remove all content and add bellow
+	
+<VirtualHost *:80>
+ServerAdmin webmaster@localhost
+    ServerAdmin magento247p3.local
+    ServerName magento247p3.local
+    ServerAlias magento247p3.local
+DocumentRoot /home/vdc/projects/php82/magento247p3/pub
+</VirtualHost>
+
+ctrl+X  and Y for yes to save
+
+sudo a2ensite vdcstore_live_163.conf
+
+sudo systemctl restart apache2
+
+sudo nano /etc/hosts
+
+after this command we can add domain in the hosts file
+
+and run all commands

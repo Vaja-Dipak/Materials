@@ -1,0 +1,399 @@
+
+1. php bin/magento setup:upgrade
+
+-->The php bin/magento setup:upgrade command is used to update the Magento database schema and data, as well as apply any necessary system upgrades.
+
+
+2. php bin/magento setup:di:compile
+
+-->The above setup:di:compile command basically generates the contents of var/di folder in Magento < 2.2 and for >=2.2. According to the official Magento docs, it compiles code like Factories, Proxies, Interceptors, etc.
+
+
+3. php bin/magento setup:static-content:deploy -f
+
+-->The deployment of static view files is influenced by three Magento modes including Production mode, Default mode, and Developer mode. The static view files deployment command enables you to write the static content file when Magento 2 store is in production mode.
+
+
+4. php bin/magento indexer:reindex	
+
+-->In Magento 2 reindex is required for these 8 indexers when any changes are made:
+
+		Category products;
+		Product categories;
+		Product price;
+		Product entity attribute value;
+		Stock;
+		Catalog rule product;
+		Catalog product rule;
+		Catalog search.
+
+
+5. bin/magento cache:flush
+
+-->Flush Magento cache. 
+-->To clean the cache in the website.
+
+6. php bin/magento module:status
+
+php bin/magento module:enable Vdcstore_NextPrevProduct
+php bin/magento module:disable Vdcstore_NextPrevProduct
+
+
+
+
+************** force export command **************
+
+php bin/magento queue:consumers:start exportProcessor
+
+
+
+
+******************List of Magento 2 SSH Commands, Sorted*****************
+
+=========================================================================
+sudo service apache2 restart
+
+service elasticsearch start   
+
+php-8.2 bin/magento s:up
+php-8.2 bin/magento s:d:c
+php-8.2 bin/magento s:s:d -f
+php-8.2 bin/magento i:rei
+php-8.2 bin/magento c:f
+
+
+php bin/magento s:up
+php bin/magento s:d:c
+php bin/magento s:s:d -f
+php bin/magento i:rei
+php bin/magento c:f
+chmod -R 777 app/ generated/ var/ pub/
+
+
+vendor/bin/phpcs --standard=Magento2 app/code/Vdcstore/Livechat  		=> worning
+vendor/bin/phpcbf --standard=Magento2 app/code/Vdcstore/Livechat  		=> [x] Error
+vendor/bin/phpcs --standard=Magento2 app/code/Vdcstore/Livechat/ --severity=10	=> final check
+
+-----------------------------Log command-------------------------------
+
+$writer = new \Zend_Log_Writer_Stream(BP . '/var/log/test.log');
+$logger = new \Zend_Log();
+$logger->addWriter($writer);
+$logger->info(print_r($new,true));
+
+$logger->info('-------------------- get data --------------------');
+
+-----------------------------message command-------------------------------
+
+$this->_messageManager->addError(__('hello'));
+$this->_messageManager->addSuccess(__('hello'));
+
+--------------------------------grep----------------------------------
+
+grep -r "-------" vendor/magento/
+
+-----------------------------Server command-------------------------------
+
+php8.3 bin/magento s:up 
+php8.3 bin/magento s:d:c
+php8.3 bin/magento s:s:d -f  
+php8.3 bin/magento i:rei
+php8.3 bin/magento c:f
+chmod -R 777 app/ generated/ var/ pub/
+
+---------- OR ------------
+
+php7.4 -dmemory_limit=-1 bin/magento setup:upgrade
+php7.4 -dmemory_limit=-1 bin/magento setup:di:compile
+php7.4 -dmemory_limit=-1 bin/magento setup:static-content:deploy -f
+php7.4 -dmemory_limit=-1 bin/magento indexer:reindex
+php7.4 -dmemory_limit=-1 bin/magento cache:flush
+
+
+-------------change admin password or create new admin user--------------------------------------------
+
+php bin/magento admin:user:create --admin-user=admin --admin-password=admin@123 --admin-email=admin@gmail.com --admin-firstname=admin --admin-lastname=developer
+
+
+-------------magento upgrade---------------------------------------------------------------------------
+
+NOTE : If any issue on composer upgrade to use composer.phar file which download from official site and add root directory
+	   OR
+       Copy link address for right click on version number on composer website and run bellow command in terminal
+       
+wget <past link adress>
+
+php composer.phar update
+
+
+php bin/magento maintenance:enable     >>> required only in live site
+
+cp composer.json composer.json.bak
+composer require magento/composer-root-update-plugin=~2.0 --no-update
+composer update
+composer require magento/product-community-edition=2.4.8 --no-update
+composer update
+
+					>>> clear cache and regenerate code
+php bin/magento cache:clean
+rm -rf var/cache/*
+rm -rf var/page_cache/*
+rm -rf generated/code/*
+php bin/magento setup:upgrade
+php bin/magento setup:di:compile
+php bin/magento setup:static-content:deploy -f
+
+php bin/magento maintenance:disable     >>> on maintenence mode
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
+Displays help for a command					:	help
+Lists commands								:	php bin/magento list
+
+
+Admin :-
+
+Creates an administrator					:	php bin/magento admin:user:create
+Unlock Admin Account						:	php bin/magento admin:user:unlock
+
+
+App :-
+
+Create dump of application					:	php bin/magento app:config:dump
+Import data from shared configuration
+files to appropriate data storage			:	php bin/magento app:config:import
+
+
+Cache :-
+
+Cleans cache type(s)						:	php bin/magento cache:clean
+Disables cache type(s)						:	php bin/magento cache:disable
+Enables cache type(s)						:	php bin/magento cache:enable
+Flushes cache storage used by cache type(s)	:	php bin/magento cache:flush
+Checks cache status							:	php bin/magento cache:status
+
+
+Catalog :-
+
+Creates resized product images				:	php bin/magento catalog:images:resize
+Removes unused product attributes			:	php bin/magento catalog:product:attributes:cleanup
+
+
+Config :-
+
+Set sensitive configuration values			:	php bin/magento config:sensitive:set
+Change system configuration					:	php bin/magento config:set
+
+Shows configuration value for given path.
+If path is not specified, all saved values 
+will be shown								:	php bin/magento config:show
+
+
+cron :-
+
+Generates and installs crontab for current user		:	php bin/magento cron:install
+Removes tasks from crontab							:	php bin/magento cron:remove
+Runs jobs by schedule								:	php bin/magento cron:run
+
+
+customer :-
+
+Upgrade customer’s hash according to the latest algorithm	:	php bin/magento customer:\hash:upgrade
+
+
+deploy	:-
+
+Set application mode.						:	php bin/magento deploy:mode:set
+Displays current application mode.			:	php bin/magento deploy:mode:show
+show status of maintenence mode 			:  php bin/magento maintenance:status
+
+
+dev :-
+
+Provides information on Dependency Injection 
+configuration for the Command.					:	php bin/magento dev:di:info
+Disable DB query logging						:	php bin/magento dev:query-log:disable
+Enable DB query logging							:	php bin/magento dev:query-log:enable
+Collects and publishes source files for theme.	:	php bin/magento dev:source-theme:deploy
+Disable frontend template hints. A cache flush
+might be required.								:	php bin/magento dev:template-hints:disable
+Enable frontend template hints. A cache flush 
+might be required.								:	php bin/magento dev:template-hints:enable
+Runs tests										:	php bin/magento dev:tests:run
+Generates the catalog of URNs to *.xsd 
+mappings for the IDE to highlight xml.			:	php bin/magento dev:urn-catalog:generate
+Converts XML file using XSL style sheets		:	php bin/magento dev:xml:convert
+
+
+i18n :-
+
+Discovers phrases in the codebase			:	php bin/magento i18n:collect-phrases
+Saves language package						:	php bin/magento i18n:pack
+Uninstalls language packages				:	php bin/magento i18n:uninstall
+
+
+indexer	:-
+
+Shows allowed Indexers						:	php bin/magento indexer:info
+Reindexes Data								:	php bin/magento indexer:reindex
+Resets indexer status to invalid			:	php bin/magento indexer:reset
+Sets index mode type						:	php bin/magento indexer:set-mode
+Shows Index Mode 							:	php bin/magento indexer:show-mode
+Shows status of Indexer 					:	php bin/magento indexer:status
+
+
+info :-
+
+Displays the Magento Admin URI							:	php bin/magento info:adminuri
+Prints list of available backup files					:	php bin/magento info:backups:list
+Displays the list of available currencies				:	php bin/magento info:currency:list
+Shows number of dependencies on Magento framework		:	php bin/magento info:dependencies:show-framework
+Shows number of dependencies between modules			:	php bin/magento info:dependencies:show-modules
+Shows number of circular dependencies between modules 	:	php bin/magento info:dependencies:show-modules-circular
+Displays the list of available language locales			:	php bin/magento info:language:list
+Displays the list of available timezones				:	php bin/magento info:timezone:list
+
+
+maintenance	:-
+
+Sets maintenance mode exempt IPs			:	php bin/magento maintenance:allow-ips
+Disables maintenance mode 					:	php bin/magento maintenance:disable
+Enables maintenance mode 					:	php bin/magento maintenance:enable
+Displays maintenance mode status			:	php bin/magento maintenance:status
+
+
+module :-
+
+Disables specified modules 					:	php bin/magento module:disable
+Enables specified modules 					:	php bin/magento module:enable
+Displays status of modules 					:	php bin/magento module:status
+Uninstalls modules installed by composer	:	php bin/magento module:uninstall
+
+
+sampledata :-
+
+Deploy sample data modules 							:	php bin/magento sampledata:deploy
+Remove all sample data packages from composer.json	:	php bin/magento sampledata:remove
+Reset all sample data modules for re-installation	:	php bin/magento sampledata:reset
+
+
+setup :-
+
+Takes backup of Magento Application 
+code base, media and database								:	php bin/magento setup:backup
+Creates or modifies the deployment configuration			:	php bin/magento setup:config:set
+Runs cron job scheduled for setup application				:	php bin/magento setup:cron:run
+Installs and upgrades data in the DB 						:	php bin/magento setup:db-data:upgrade
+Installs and upgrades the DB schema							:	php bin/magento setup:db-schema:upgrade
+Checks if DB schema or data requires upgrade 				:	php bin/magento setup:db:status
+Generates DI configuration and all missing 
+classes that can be auto-generated							:	php bin/magento setup:di:compile
+Installs the Magento application							:	php bin/magento setup:install
+Generates fixtures											:	php bin/magento setup:performance:generate-fixtures
+Rolls back Magento Application codebase, media and database	:	php bin/magento setup:rollback
+Deploys static view files									:	php bin/magento setup:static-content:deploy
+Installs the store configuration. 
+Deprecated since 2.2.0. Use config:set instead 				:	php bin/magento setup:store-config:set
+Uninstalls the Magento application							:	php bin/magento setup:uninstall
+Upgrades the Magento application, DB data, and schema 		:	php bin/magento setup:upgrade
+
+
+
+store :-
+
+Displays the list of stores					:	php bin/magento store:list
+Displays the list of websites				:	store:website:list
+
+
+theme :-
+
+Uninstalls theme 							:	php bin/magento theme:uninstall
+
+
+varnish	:-
+
+php bin/magento varnish:vcl:ge
+
+
+php bin/magento deploy:mode:set developer
+
+
+Errorr..........
+
+composer config -g http-basic.repo.magento.com <public_key> <private_key>
+
+php bin/magento sampledata:deploy
+
+Username: 7c018006799466c681ad507e27904677
+Password: 289077c86e811661a8f7751828485d3a
+
+
+
+-----------------------Local setup of live website------------------------------
+
+Mysql dump of live database
+Download SQL in local
+Make zip of Magento folders and exclude SQL and zip files.
+Download zip file in local
+Import SQL in your local
+Change URL in core_config_data table
+Unzip magento folder file in your local
+Change database, username and password in env.php
+Run all the commands
+Run website in the browser.
+
+Export : mysqldump -u mysql_user -p databasename > filename.sql
+
+Make zip : zip -r filename.zip -x backup.sql .var/log/**\*
+		 : zip -r aegis-elec.com_stage_17-10-2025.zip html/ -x html/a23ee8c7_a5426_09102025.sql html/a23ee8c7_a5426_15102025.sql html/a23ee8c7_a5426_15102025.zip html/app-bk14102025.zip html/media/**\* html/pub/media/catalog/product/cache/**\* html/html/**\* html/.git/**\*
+
+transfer file from pub folder to other server :
+wget https://vdcstore.com/public_html-28-feb-25.zip
+
+
+-----------------------------create a vertual host--------------------------------------
+
+ref block : https://www.digitalocean.com/community/tutorials/how-to-set-up-apache-virtual-hosts-on-ubuntu-20-04
+
+sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/your_domain_1.conf
+sudo nano /etc/apache2/sites-available/vdcstore_live_163.conf
+
+remove all content and add bellow
+	
+<VirtualHost *:80>
+ServerAdmin webmaster@localhost
+    ServerAdmin magento.local
+    ServerName magento.local
+    ServerAlias magento.local
+    DocumentRoot /home/vdc/projects/php82/magento/pub
+
+        <FilesMatch \.php> # Apache 2.4.10+ can proxy to unix socket
+        SetHandler "proxy:unix:/var/run/php/php8.2-fpm.sock|fcgi://localhost/"
+        </FilesMatch>
+
+</VirtualHost>
+
+
+ctrl+X  and Y for yes to save
+
+sudo a2ensite vdcstore_live_163.conf
+
+sudo systemctl restart apache2
+
+sudo nano /etc/hosts
+
+after this command we can add domain in the hosts file
+
+and run all commands
+
+
+	
+===================== Razorpay detail =============== :- 
+
+	Api Key :- rzp_test_gztn1Wa2J9rM8N
+	Api key Secret :- OAr1M6hqmpowsNTSVJ6UGESq
+	
+	
+	
+
+

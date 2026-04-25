@@ -1,0 +1,12 @@
+fortailvind css issue solving - run below mentioned commands
+on -> app/design/frontend/Hyva/child/web/tailwind
+
+code: 'MODULE_NOT_FOUND'
+-> rm -rf node_modules package-lock.json
+-> npm install
+-> npm install tailwindcss postcss autoprefixer --save-dev
+-> npm run watch
+++++++++++
+rm -rf node_modules package-lock.json
+npm cache clean --force
+npm install tailwindcss@3.4.14 postcss@8.4.45 autoprefixer@10.4.20 postcss-import@14.1.0 postcss-preset-env@9.3.0 @tailwindcss/forms@0.5.9 @tailwindcss/typography@0.5.15 --save-dev

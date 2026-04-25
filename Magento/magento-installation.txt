@@ -1,0 +1,97 @@
+
+======================================================Magento Installation===============================================
+On checkout if country is selected afganisthan then 18% tax should apply and for the chaina 5% should be apply.
+
+mostimp :-composer config -g http-basic.repo.magento.com 2e39fe48a2ca84a1aba70f602498a6a4 7d06335b8d939ebf0e902b5004fb86c7 
+
+--------------------------------------------------------------------------------------------------------------------------
+1) ==> This Command use to composer with inastall magento.
+--------------------------------------------------------------------------------------------------------------------------
+composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition:2.4.6 ma246(Your Folder Name)
+composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition:2.4.6 magento246Check
+composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition:2.4.6-p3 m246p3Check
+composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition:2.4.7-p3 magento247
+--------------------------------------------------------------------------------------------------------------------------
+2) ==> This Command use to Database createtion. 
+--------------------------------------------------------------------------------------------------------------------------
+
+mysql -u root -p
+password : root@123
+
+create database ma246;(Your Database Name)
+create database magento247;
+--------------------------------------------------------------------------------------------------------------------------
+3) ==>This command use to setup:installation.
+--------------------------------------------------------------------------------------------------------------------------
+move to folder :- 
+after this cammand 
+
+php -d memory_limit=-1 bin/magento setup:install --base-url=http://127.0.0.1/php82/magento247/pub/ --db-host=localhost --db-name=magento247 --db-user=root --db-password=root@123 --admin-firstname=Admin --admin-lastname=admin --admin-email=admin@gmail.com --admin-user=admin --admin-password=admin123 --language=en_US --currency=USD --timezone=America/Chicago --use-rewrites=1 --search-engine=elasticsearch7 --elasticsearch-host=localhost --elasticsearch-port=9200 --backend-frontname="admin"
+
+
+php -d memory_limit=-1 bin/magento setup:install --base-url=http://139.162.1.221/php81/magento_New_246/pub/ --db-host=localhost --db-name=Magento_New_246 --db-user=root --db-password='Patyam$123#' --admin-firstname=Admin --admin-lastname=admin --admin-email=admin@gmail.com --admin-user=admin --admin-password=admin@123 --language=en_US --currency=USD --timezone=America/Chicago --use-rewrites=1 --search-engine=elasticsearch7 --elasticsearch-host=localhost --elasticsearch-port=9200
+
+--------------------------------------------------------------------------------------------------------------------------
+4)After this command :- permssion command 
+--------------------------------------------------------------------------------------------------------------------------
+
+chmod -R 777 app/ generated/ var/ pub/
+
+chmod -R 777 magento247p3
+
+--------------------------------------------------------------------------------------------------------------------------
+5)Install Sample Data
+--------------------------------------------------------------------------------------------------------------------------
+
+bin/magento sampledata:deploy
+
+
+Public Key: 2e39fe48a2ca84a1aba70f602498a6a4
+Private Key: 7d06335b8d939ebf0e902b5004fb86c7
+
+--------------------------------------------------------------------------------------------------------------------------
+6)
+--------------------------------------------------------------------------------------------------------------------------
+
+sudo php -dmemory_limit=-1 bin/magento setup:upgrade
+sudo php -dmemory_limit=-1 bin/magento setup:di:compile
+sudo php -dmemory_limit=-1 bin/magento setup:static-content:deploy -f
+sudo php -dmemory_limit=-1 bin/magento indexer:reindex
+sudo php -dmemory_limit=-1 bin/magento cache:flush
+sudo chmod -R 777 app/ generated/ var/ pub/
+
+OR
+
+php bin/magento s:up 
+php bin/magento s:d:c
+php bin/magento s:s:d -f
+php bin/magento i:rei
+php bin/magento c:f
+chmod -R 777 app/ generated/ var/ pub/
+
+--------------------------------------------------------------------------------------------------------------------------
+7)
+--------------------------------------------------------------------------------------------------------------------------
+
+app/etc/config.php
+admin link to get from env.php file app/etc/env
+'backend' => [
+        'frontName' => 'admin_lmnv9m'
+"admin_lmnv9m"this name is use for admin url of the site
+
+=>generate admin authentication error
+
+=> bin/magento module:disable Magento_TwoFactorAuth
+   app/etc/config.php
+   'Magento_TwoFactorAuth' => 0,
+
+bin/magento deploy:mode:set developer
+
+
+
+sudo php -dmemory_limit=-1 bin/magento setup:upgrade
+sudo php -dmemory_limit=-1 bin/magento setup:di:compile
+sudo php -dmemory_limit=-1 bin/magento setup:static-content:deploy -f
+sudo php -dmemory_limit=-1 bin/magento indexer:reindex
+sudo php -dmemory_limit=-1 bin/magento cache:flush
+sudo chmod -R 777 app/ generated/ var/ pub/
